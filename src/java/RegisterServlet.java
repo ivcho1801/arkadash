@@ -29,9 +29,9 @@ public class RegisterServlet extends HttpServlet {
                     </html>
                     """;
         String db = "jdbc:mariadb://localhost/bdj";
-        String reqName;
-        String reqPass;
-        String reqMail;
+        String reqName = request.getParameter(string: "name");
+        String reqPass = request.getParameter(string: "pass");
+        String reqMail = request.getParameter(string: "mail");
         try {
             Class.forName("org.mariadb.jdbc.Driver");
             Connection conn = DriverManager.getConnection(db);
@@ -39,7 +39,7 @@ public class RegisterServlet extends HttpServlet {
             String query = """
                    INSERT INTO potrebiteli(name, pass, mail)
                    VALUES (\"%s\", \"%s\", \"%s\");
-                            """;
+                            """.formatted(args:reqName, args:reqPass, args:reqMail);
             ResultSet rs = stmt.executeQuery(query);
         } catch (SQLException ex) {
             Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
